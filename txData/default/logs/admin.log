@@ -1,0 +1,17 @@
+================================================================
+======== txAdmin v8.0.1 atop fxserver 17346 Starting - 26/07/2025, 10:43:21
+================================================================
+[10:43:35][walsh.c6] created admins file
+[10:44:14][walsh.c6] Config changes: general.serverName
+[10:44:14][walsh.c6] Changing global settings via setup stepper and started Deployer.
+[10:44:25][walsh.c6] Setting recipe.
+[10:44:43][walsh.c6] Running recipe.
+================================================================
+======== txAdmin v8.0.1 atop fxserver 17346 Starting - 26/07/2025, 10:50:01
+================================================================
+[10:50:14][walsh.c6] logged in from 127.0.0.1 via cfxre
+[10:51:34][walsh.c6] Config changes: server.dataPath
+[10:51:34][walsh.c6] Changing global/fxserver settings via setup stepper.
+[10:51:39][MONITOR] Restarting server: Server process close detected.
+[10:52:06][walsh.c6] [walsh.c6] executed "RESTART SERVER"
+[10:53:59][walsh.c6] [walsh.c6] executed "RESTART SERVER"

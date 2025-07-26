@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "general": {
+    "serverName": "walshcore"
+  },
+  "server": {
+    "dataPath": "C:/walshcore/txData/walshcore/"
+  }
+}
