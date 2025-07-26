@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walsh Core Framework</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <!-- Main HUD Container -->
+    <div id="hud-container">
+        <!-- Money Display -->
+        <div id="money-display" class="hud-element">
+            <div class="money-item">
+                <i class="fas fa-wallet"></i>
+                <span id="cash-amount">$0</span>
+            </div>
+            <div class="money-item">
+                <i class="fas fa-university"></i>
+                <span id="bank-amount">$0</span>
+            </div>
+        </div>
+
+        <!-- Player Status -->
+        <div id="status-display" class="hud-element">
+            <div class="status-bar">
+                <i class="fas fa-heart"></i>
+                <div class="progress-bar">
+                    <div id="health-bar" class="progress-fill"></div>
+                </div>
+            </div>
+            <div class="status-bar">
+                <i class="fas fa-shield-alt"></i>
+                <div class="progress-bar">
+                    <div id="armor-bar" class="progress-fill"></div>
+                </div>
+            </div>
+            <div class="status-bar">
+                <i class="fas fa-running"></i>
+                <div class="progress-bar">
+                    <div id="stamina-bar" class="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Needs Display -->
+        <div id="needs-display" class="hud-element">
+            <div class="need-item">
+                <i class="fas fa-utensils"></i>
+                <div class="need-bar">
+                    <div id="hunger-bar" class="need-fill"></div>
+                </div>
+            </div>
+            <div class="need-item">
+                <i class="fas fa-tint"></i>
+                <div class="need-bar">
+                    <div id="thirst-bar" class="need-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Speed Display -->
+        <div id="speedometer" class="hud-element" style="display: none;">
+            <div class="speed-value">
+                <span id="speed-number">0</span>
+                <span class="speed-unit">km/h</span>
+            </div>
+            <div class="fuel-bar">
+                <i class="fas fa-gas-pump"></i>
+                <div class="fuel-fill" id="fuel-fill"></div>
+            </div>
+        </div>
+
+        <!-- Minimap Info -->
+        <div id="minimap-info" class="hud-element">
+            <div id="location-display">Los Santos</div>
+            <div id="time-display">12:00</div>
+            <div id="date-display">Jan 01, 2024</div>
+        </div>
+    </div>
+
+    <!-- Red Zone Warning -->
+    <div id="redzone-warning" class="warning-overlay" style="display: none;">
+        <div class="warning-content">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h2>RED ZONE ENTERED</h2>
+            <p id="redzone-name">Unknown Zone</p>
+            <p>PvP ENABLED - PROCEED WITH CAUTION</p>
+        </div>
+        <div class="redzone-border"></div>
+    </div>
+
+    <!-- Low Money Warning -->
+    <div id="low-money-warning" class="warning-overlay" style="display: none;">
+        <div class="warning-content">
+            <i class="fas fa-exclamation-circle"></i>
+            <h2>LOW FUNDS WARNING</h2>
+            <p>Current: $<span id="current-money">0</span></p>
+            <p>Required: $<span id="required-money">100000</span></p>
+            <p>EARN MONEY OR FACE ELIMINATION!</p>
+        </div>
+    </div>
+
+    <!-- Elimination Screen -->
+    <div id="elimination-screen" class="elimination-overlay" style="display: none;">
+        <div class="elimination-content">
+            <h1>YOU HAVE BEEN ELIMINATED</h1>
+            <p>Failed to maintain $100,000</p>
+            <p>Better luck next time!</p>
+        </div>
+    </div>
+
+    <!-- Death Screen -->
+    <div id="death-screen" class="death-overlay" style="display: none;">
+        <div class="death-content">
+            <h1>YOU DIED</h1>
+            <p>Waiting for respawn or medical assistance...</p>
+            <div class="death-timer">
+                <span id="respawn-timer">30</span> seconds
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification System -->
+    <div id="notification-container"></div>
+
+    <!-- Menu System -->
+    <div id="menu-container" class="menu-overlay" style="display: none;">
+        <div class="menu-content">
+            <div class="menu-header">
+                <h2 id="menu-title">Menu</h2>
+                <button id="menu-close" class="btn-close">&times;</button>
+            </div>
+            <div class="menu-body">
+                <div id="menu-items"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ATM Interface -->
+    <div id="atm-interface" class="interface-overlay" style="display: none;">
+        <div class="interface-content">
+            <div class="interface-header">
+                <h2>ATM</h2>
+                <button class="btn-close" onclick="closeATM()">&times;</button>
+            </div>
+            <div class="interface-body">
+                <div class="account-info">
+                    <h3>Account Balance</h3>
+                    <div class="balance-display">
+                        <div class="balance-item">
+                            <span>Cash:</span>
+                            <span id="atm-cash">$0</span>
+                        </div>
+                        <div class="balance-item">
+                            <span>Bank:</span>
+                            <span id="atm-bank">$0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="atm-actions">
+                    <button class="btn btn-primary" onclick="showDepositForm()">Deposit</button>
+                    <button class="btn btn-primary" onclick="showWithdrawForm()">Withdraw</button>
+                </div>
+                <div id="atm-form" style="display: none;">
+                    <input type="number" id="atm-amount" placeholder="Amount" min="1">
+                    <button id="atm-confirm" class="btn btn-success">Confirm</button>
+                    <button class="btn btn-secondary" onclick="hideATMForm()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vehicle Shop -->
+    <div id="vehicle-shop" class="interface-overlay" style="display: none;">
+        <div class="interface-content">
+            <div class="interface-header">
+                <h2>Vehicle Shop</h2>
+                <button class="btn-close" onclick="closeVehicleShop()">&times;</button>
+            </div>
+            <div class="interface-body">
+                <div class="vehicle-grid" id="vehicle-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Weapon Shop -->
+    <div id="weapon-shop" class="interface-overlay" style="display: none;">
+        <div class="interface-content">
+            <div class="interface-header">
+                <h2>Gun Store</h2>
+                <button class="btn-close" onclick="closeWeaponShop()">&times;</button>
+            </div>
+            <div class="interface-body">
+                <div class="weapon-categories">
+                    <button class="category-btn active" data-category="all">All</button>
+                    <button class="category-btn" data-category="pistols">Pistols</button>
+                    <button class="category-btn" data-category="rifles">Rifles</button>
+                    <button class="category-btn" data-category="smg">SMGs</button>
+                </div>
+                <div class="weapon-grid" id="weapon-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gang Menu -->
+    <div id="gang-menu" class="interface-overlay" style="display: none;">
+        <div class="interface-content">
+            <div class="interface-header">
+                <h2>Gang Management</h2>
+                <button class="btn-close" onclick="closeGangMenu()">&times;</button>
+            </div>
+            <div class="interface-body">
+                <div id="gang-info" class="gang-section">
+                    <h3>Gang Information</h3>
+                    <div id="gang-details"></div>
+                </div>
+                <div id="gang-actions" class="gang-section">
+                    <h3>Actions</h3>
+                    <div id="gang-action-buttons"></div>
+                </div>
+                <div id="gang-members" class="gang-section">
+                    <h3>Members</h3>
+                    <div id="gang-member-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gang Invitation -->
+    <div id="gang-invitation" class="invitation-overlay" style="display: none;">
+        <div class="invitation-content">
+            <h2>Gang Invitation</h2>
+            <p>You have been invited to join:</p>
+            <h3 id="gang-invite-name">Gang Name</h3>
+            <p>Invited by: <span id="gang-inviter">Player</span></p>
+            <div class="invitation-actions">
+                <button class="btn btn-success" onclick="acceptGangInvitation()">Accept</button>
+                <button class="btn btn-danger" onclick="declineGangInvitation()">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Zone Contest -->
+    <div id="zone-contest" class="contest-overlay" style="display: none;">
+        <div class="contest-content">
+            <h2>TERRITORY CONTESTED</h2>
+            <p id="contest-zone">Zone Name</p>
+            <p>Multiple gangs are fighting for control!</p>
+            <div class="contest-gangs" id="contest-gangs"></div>
+        </div>
+    </div>
+
+    <!-- Interaction Prompt -->
+    <div id="interaction-prompt" class="interaction-overlay" style="display: none;">
+        <div class="prompt-content">
+            <span id="prompt-text">Press E to interact</span>
+        </div>
+    </div>
+
+    <!-- Refuel Progress -->
+    <div id="refuel-progress" class="progress-overlay" style="display: none;">
+        <div class="progress-content">
+            <h3>Refueling Vehicle</h3>
+            <div class="progress-bar-large">
+                <div id="refuel-progress-bar" class="progress-fill"></div>
+            </div>
+            <p>Cost: $<span id="refuel-cost">0</span></p>
+            <p>Fuel: <span id="refuel-fuel">0</span>%</p>
+        </div>
+    </div>
+
+    <!-- Weapon Wheel -->
+    <div id="weapon-wheel" class="weapon-wheel-overlay" style="display: none;">
+        <div class="weapon-wheel-container">
+            <div class="weapon-wheel-center">
+                <i class="fas fa-crosshairs"></i>
+            </div>
+            <div id="weapon-wheel-items"></div>
+        </div>
+    </div>
+
+    <!-- Admin Menu -->
+    <div id="admin-menu" class="interface-overlay" style="display: none;">
+        <div class="interface-content">
+            <div class="interface-header">
+                <h2>Admin Panel</h2>
+                <button class="btn-close" onclick="closeAdminMenu()">&times;</button>
+            </div>
+            <div class="interface-body">
+                <div class="admin-tabs">
+                    <button class="tab-btn active" data-tab="players">Players</button>
+                    <button class="tab-btn" data-tab="vehicles">Vehicles</button>
+                    <button class="tab-btn" data-tab="server">Server</button>
+                </div>
+                <div id="admin-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Player List -->
+    <div id="player-list" class="list-overlay" style="display: none;">
+        <div class="list-content">
+            <div class="list-header">
+                <h3>Select Player</h3>
+                <button class="btn-close" onclick="closePlayerList()">&times;</button>
+            </div>
+            <div class="list-body">
+                <div id="player-items"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Announcement -->
+    <div id="announcement" class="announcement-overlay" style="display: none;">
+        <div class="announcement-content">
+            <div class="announcement-header">
+                <i class="fas fa-bullhorn"></i>
+                <span>ANNOUNCEMENT</span>
+            </div>
+            <div class="announcement-body">
+                <p id="announcement-text">Server announcement text</p>
+                <p class="announcement-sender">From: <span id="announcement-sender">Server</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat System -->
+    <div id="chat-container" class="chat-overlay">
+        <div id="chat-messages"></div>
+        <div id="chat-input-container" style="display: none;">
+            <input type="text" id="chat-input" placeholder="Type a message...">
+            <button id="chat-send">Send</button>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h2>Walsh Core</h2>
+            <p id="loading-text">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Custom Context Menu -->
+    <div id="context-menu" class="context-menu" style="display: none;">
+        <div id="context-menu-items"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,510 @@
+/* Walsh Core HUD Styles - Purple & White Theme */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+:root {
+    --walsh-primary: #8B5CF6;
+    --walsh-secondary: #FFFFFF;
+    --walsh-accent: #A855F7;
+    --walsh-dark: #1F2937;
+    --walsh-darker: #111827;
+    --walsh-light: #F9FAFB;
+    --walsh-success: #10B981;
+    --walsh-warning: #F59E0B;
+    --walsh-error: #EF4444;
+    --walsh-info: #3B82F6;
+    
+    --shadow-primary: 0 4px 20px rgba(139, 92, 246, 0.3);
+    --shadow-dark: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --border-radius: 12px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: transparent;
+    color: var(--walsh-secondary);
+    overflow: hidden;
+    user-select: none;
+}
+
+/* Main HUD Container */
+.hud-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+/* Walsh Logo */
+.walsh-logo {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--walsh-primary), var(--walsh-accent));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-primary);
+    pointer-events: auto;
+    transition: var(--transition);
+}
+
+.walsh-logo:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 30px rgba(139, 92, 246, 0.5);
+}
+
+.walsh-logo img {
+    width: 35px;
+    height: 35px;
+    filter: brightness(0) invert(1);
+}
+
+/* Status Bars Container */
+.status-container {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: auto;
+}
+
+.status-bar {
+    background: linear-gradient(135deg, rgba(31, 41, 55, 0.9), rgba(17, 24, 39, 0.9));
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: var(--border-radius);
+    padding: 12px 16px;
+    min-width: 220px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: var(--transition);
+    box-shadow: var(--shadow-dark);
+}
+
+.status-bar:hover {
+    border-color: var(--walsh-primary);
+    box-shadow: var(--shadow-primary);
+}
+
+.status-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--walsh-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.status-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.status-label {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 400;
+    margin-bottom: 2px;
+}
+
+.status-value {
+    font-size: 16px;
+    color: var(--walsh-secondary);
+    font-weight: 500;
+}
+
+/* Progress Bar */
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 6px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--walsh-primary), var(--walsh-accent));
+    border-radius: 3px;
+    transition: width 0.5s ease;
+    position: relative;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Money Display */
+.money-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: auto;
+}
+
+.money-item {
+    background: linear-gradient(135deg, rgba(31, 41, 55, 0.95), rgba(17, 24, 39, 0.95));
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    border-radius: var(--border-radius);
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 180px;
+    transition: var(--transition);
+    box-shadow: var(--shadow-dark);
+}
+
+.money-item:hover {
+    border-color: var(--walsh-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-primary);
+}
+
+.money-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--walsh-primary);
+}
+
+.money-label {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 400;
+}
+
+.money-amount {
+    font-size: 16px;
+    color: var(--walsh-secondary);
+    font-weight: 600;
+    margin-left: auto;
+}
+
+/* Notifications */
+.notification-container {
+    position: absolute;
+    top: 20px;
+    right: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: auto;
+    max-width: 350px;
+}
+
+.notification {
+    background: linear-gradient(135deg, rgba(31, 41, 55, 0.95), rgba(17, 24, 39, 0.95));
+    backdrop-filter: blur(15px);
+    border-left: 4px solid var(--walsh-primary);
+    border-radius: var(--border-radius);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--shadow-dark);
+    animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: var(--transition);
+}
+
+.notification.success { border-left-color: var(--walsh-success); }
+.notification.warning { border-left-color: var(--walsh-warning); }
+.notification.error { border-left-color: var(--walsh-error); }
+.notification.info { border-left-color: var(--walsh-info); }
+
+.notification-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.notification.success .notification-icon { color: var(--walsh-success); }
+.notification.warning .notification-icon { color: var(--walsh-warning); }
+.notification.error .notification-icon { color: var(--walsh-error); }
+.notification.info .notification-icon { color: var(--walsh-info); }
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--walsh-secondary);
+    margin-bottom: 2px;
+}
+
+.notification-message {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.4;
+}
+
+/* Mini Map Styling */
+.minimap-container {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    pointer-events: none;
+}
+
+/* Vehicle HUD */
+.vehicle-hud {
+    position: absolute;
+    bottom: 120px;
+    left: 20px;
+    background: linear-gradient(135deg, rgba(31, 41, 55, 0.9), rgba(17, 24, 39, 0.9));
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: var(--border-radius);
+    padding: 16px 20px;
+    display: none;
+    gap: 16px;
+    pointer-events: auto;
+    box-shadow: var(--shadow-dark);
+}
+
+.vehicle-hud.show {
+    display: flex;
+    animation: slideInLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vehicle-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.vehicle-stat-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--walsh-primary);
+}
+
+.vehicle-stat-value {
+    font-size: 14px;
+    color: var(--walsh-secondary);
+    font-weight: 500;
+}
+
+.vehicle-stat-bar {
+    width: 60px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.vehicle-stat-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--walsh-primary), var(--walsh-accent));
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+/* Animations */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Responsive Design */
+@media (max-width: 1366px) {
+    .status-container { bottom: 15px; left: 15px; }
+    .money-container { top: 15px; left: 15px; }
+    .notification-container { top: 15px; right: 85px; }
+    .walsh-logo { top: 15px; right: 15px; width: 50px; height: 50px; }
+    .vehicle-hud { bottom: 100px; left: 15px; }
+}
+
+/* Cinematic Mode */
+.hud-container.cinematic {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+/* Hidden HUD */
+.hud-container.hidden {
+    display: none;
+}
+
+/* Low Money Warning */
+.low-money-warning {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(220, 38, 38, 0.95));
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(239, 68, 68, 0.8);
+    border-radius: var(--border-radius);
+    padding: 30px 40px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(239, 68, 68, 0.4);
+    animation: pulse 2s infinite;
+    pointer-events: auto;
+    display: none;
+}
+
+.low-money-warning.show {
+    display: block;
+    animation: fadeIn 0.5s ease, pulse 2s infinite 0.5s;
+}
+
+.warning-icon {
+    font-size: 48px;
+    color: var(--walsh-secondary);
+    margin-bottom: 16px;
+}
+
+.warning-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--walsh-secondary);
+    margin-bottom: 12px;
+}
+
+.warning-message {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.5;
+}
+
+/* Death Screen */
+.death-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(31, 41, 55, 0.9));
+    backdrop-filter: blur(10px);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    pointer-events: auto;
+    z-index: 9999;
+}
+
+.death-screen.show {
+    display: flex;
+    animation: fadeIn 1s ease;
+}
+
+.death-icon {
+    font-size: 80px;
+    color: var(--walsh-error);
+    margin-bottom: 24px;
+    animation: pulse 2s infinite;
+}
+
+.death-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--walsh-secondary);
+    margin-bottom: 16px;
+}
+
+.death-message {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 24px;
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+.respawn-timer {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--walsh-primary);
+    margin-bottom: 20px;
+}
+
+.respawn-button {
+    background: linear-gradient(135deg, var(--walsh-primary), var(--walsh-accent));
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--walsh-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-primary);
+}
+
+.respawn-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4);
+}
+
+.respawn-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}

@@ -1,0 +1,24 @@
+modules = ["lua"]
+
+[nix]
+channel = "stable-25_05"
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Walsh Core Framework Server"
+
+[[workflows.workflow]]
+name = "Walsh Core Framework Server"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "echo \"Starting Walsh Core Framework Server...\" && echo \"\" && echo \"🎯 WALSH CORE FRAMEWORK v1.0.0\" && echo \"═══════════════════════════════════════\" && echo \"✅ Complete FiveM Framework Structure\" && echo \"✅ Purple & White Color Theme\" && echo \"✅ Walsh Branding Throughout\" && echo \"✅ Modular Resource Architecture\" && echo \"\" && echo \"📁 Framework Components:\" && echo \"  └── walsh-core (Core framework)\" && echo \"  └── walsh-hud (Purple/White UI)\" && echo \"  └── walsh-gangs (Gang system)\" && echo \"  └── walsh-admin (Admin tools)\" && echo \"  └── Complete server.cfg\" && echo \"  └── Database schema\" && echo \"\" && echo \"🎨 Branding:\" && echo \"  └── Primary: #8B5CF6 (Purple)\" && echo \"  └── Secondary: #FFFFFF (White)\" && echo \"  └── Walsh logo integrated\" && echo \"\" && echo \"⚡ Key Features:\" && echo \"  └── 100k or Die survival mechanic\" && echo \"  └── Gang warfare & territories\" && echo \"  └── Complete player management\" && echo \"  └── Economy & banking system\" && echo \"  └── Vehicle & weapon systems\" && echo \"  └── Admin tools & logging\" && echo \"\" && echo \"🔧 Installation:\" && echo \"  1. Extract to FiveM server resources/\" && echo \"  2. Configure MySQL database\" && echo \"  3. Update server.cfg paths\" && echo \"  4. Start framework in load order\" && echo \"\" && echo \"Walsh Core Framework ready for deployment!\" && sleep 10"
